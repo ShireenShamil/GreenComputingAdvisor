@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backward Chaining</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="wrap">
+        <div class="section" style="padding:28px 30px;">
+            <div class="leaf" style="font-size:2.5rem; margin-bottom:8px;">🌱</div>
+            <h1 style="margin-bottom:8px;">Green Computing Advisor</h1>
+            <p class="subtitle">Backward Chaining - Goal Verification</p>
+
+            <form action="/backward" method="POST" class="section" style="padding:24px; margin-top:24px;">
+                <div class="grid">
+                    <div>
+                        <label for="goal">Select the goal to verify</label>
+                        <select name="goal" id="goal" required>
+                            <option value="enable_sleep">Recommend enabling sleep mode</option>
+                            <option value="balanced_power_mode">Recommend balanced power mode</option>
+                            <option value="enable_battery_saver">Recommend battery saver</option>
+                            <option value="reduce_brightness">Recommend reducing brightness</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid" style="margin-top:18px;">
+                    <div>
+                        <label>Idle time</label>
+                        <select name="idle_time">
+                            <option value="high">High</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Sleep mode</label>
+                        <select name="sleep_mode">
+                            <option value="disabled">Disabled</option>
+                            <option value="enabled">Enabled</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Power mode</label>
+                        <select name="power_mode">
+                            <option value="high">High performance</option>
+                            <option value="balanced">Balanced</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid" style="margin-top:18px;">
+                    <div>
+                        <label>Daily usage</label>
+                        <select name="daily_usage">
+                            <option value="long">Long</option>
+                            <option value="short">Short</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Maximum performance required?</label>
+                        <select name="performance_required">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="margin-top:24px;">
+                    <button type="submit" class="btn">Verify Goal</button>
+                    <a href="/" class="btn secondary" style="margin-left:10px;">Home</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,1 @@
+function toggleWhy(id){document.getElementById(id).classList.toggle("hidden");}

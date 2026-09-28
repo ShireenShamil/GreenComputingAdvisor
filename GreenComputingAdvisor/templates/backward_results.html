@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backward Chaining Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="wrap">
+        <div class="section" style="padding:28px 30px;">
+            <div class="leaf" style="font-size:2.5rem; margin-bottom:8px;">🌱</div>
+            <h1 style="margin-bottom:8px;">Backward Chaining Result</h1>
+            <p class="subtitle">Goal verification outcome</p>
+
+            <div class="score" style="margin-top:20px;">
+                <div>
+                    <span class="big">{% if result.proved %}✓{% else %}✗{% endif %}</span>
+                    <span style="font-size:1.2rem; font-weight:700;">{% if result.proved %}Goal Proved{% else %}Goal Not Proved{% endif %}</span>
+                </div>
+                <div>
+                    <h3>Goal</h3>
+                    <p>{{ result.goal }}</p>
+                    <p>{{ result.reason }}</p>
+                </div>
+            </div>
+
+            {% if result.rules %}
+                <div class="section" style="margin-top:24px;">
+                    <h2>Rules Examined</h2>
+                    {% for rule in result.rules %}
+                        <article class="recommend">
+                            <div><span class="tag medium">Rule {{ rule.rule_id }}</span></div>
+                            <h3>{{ rule.conclusion }}</h3>
+                            <p><b>Conclusion:</b> {{ rule.conclusion }}</p>
+                            <p><b>Conditions:</b> {{ rule.conditions }}</p>
+                            <p><b>Explanation:</b> {{ rule.explanation }}</p>
+                            <p><b>Rule proved:</b> {{ rule.proved }}</p>
+                            {% if rule.missing_facts %}
+                                <p><b>Missing conditions:</b> {{ rule.missing_facts }}</p>
+                            {% endif %}
+                        </article>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if result.missing_facts %}
+                <div class="section">
+                    <h2>Missing Facts</h2>
+                    <ul>
+                        {% for fact in result.missing_facts %}
+                            <li>{{ fact }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div style="margin-top:20px;">
+                <a class="btn" href="/backward-form">Try Another Goal</a>
+                <a class="btn secondary" href="/" style="margin-left:10px;">Home</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

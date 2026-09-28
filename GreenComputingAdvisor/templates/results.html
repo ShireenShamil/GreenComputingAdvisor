@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Results</title><link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+<script src="{{ url_for('static',filename='js/app.js') }}" defer></script></head>
+<body><main class="wrap"><h1>🌱 Expert System Results</h1>
+<div class="score"><div><span class="big">{{ score }}</span><span>/100</span><p>Green Score · {{ label }}</p></div>
+<div><h3>Energy estimate</h3><p>{{ metrics.daily_kwh }} kWh/day · {{ metrics.monthly_kwh }} kWh/month · {{ metrics.annual_kwh }} kWh/year</p>
+{% if metrics.monthly_co2 > 0 %}<p>{{ metrics.monthly_co2 }} kg CO₂e/month (using your entered carbon intensity)</p>{% endif %}</div></div>
+
+<div class="section"><h2>Recommendations ({{ results|length }})</h2>
+{% if results %}
+{% for r in results %}
+<article class="recommend"><div><span class="tag {{ r.priority|lower }}">{{ r.priority }}</span><b>{{ r.id }}</b></div>
+<h3>{{ r.recommendation }}</h3><p>{{ r.explanation }}</p>
+<button type="button" class="why" onclick="toggleWhy('why{{ loop.index }}')">Why did the rule fire?</button>
+<div id="why{{ loop.index }}" class="reason hidden"><b>{{ r.id }} conditions:</b>
+<ul>{% for key,value in r.matched_facts.items() %}<li>{{ key.replace('_',' ') }} = <b>{{ value }}</b></li>{% endfor %}</ul>
+<p><b>Derived conclusion:</b> {{ r.conclusion.replace('_',' ') }}</p></div></article>
+{% endfor %}
+{% else %}<p>No inefficiency rule matched the supplied facts. Review the inputs if you expected a recommendation.</p>{% endif %}
+</div>
+<a class="btn secondary" href="/assessment">Run Another Assessment</a>
+<p class="disclaimer">The score is a transparent project heuristic based on fired-rule penalties; it is not an industry certification. Recommendations should be validated against performance, safety, cost and operational requirements.</p>
+</main></body></html>
