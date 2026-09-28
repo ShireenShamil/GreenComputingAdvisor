@@ -19,6 +19,32 @@
 {% endfor %}
 {% else %}<p>No inefficiency rule matched the supplied facts. Review the inputs if you expected a recommendation.</p>{% endif %}
 </div>
+
+{% if results %}
+<div class="section">
+  <h2>Full Reasoning Flow</h2>
+  <p class="hint">Each fired rule is shown as a complete fact-to-rule-to-conclusion path. The active path is highlighted to make the decision chain easy to follow.</p>
+  <div class="reason-graph">
+    {% for r in results %}
+    <div class="flow-card active">
+      <div class="flow-stack">
+        <div class="flow-label">Input facts</div>
+        <div class="fact-list">
+          {% for key, value in r.matched_facts.items() %}
+            <span class="fact-pill">{{ key.replace('_',' ') }} = {{ value }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node rule active">{{ r.id }}</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node result active">{{ r.conclusion.replace('_',' ') }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
 <a class="btn secondary" href="/assessment">Run Another Assessment</a>
 <p class="disclaimer">The score is a transparent project heuristic based on fired-rule penalties; it is not an industry certification. Recommendations should be validated against performance, safety, cost and operational requirements.</p>
 </main></body></html>
